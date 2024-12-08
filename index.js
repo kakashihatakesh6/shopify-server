@@ -17,7 +17,7 @@ require('dotenv').config();
 
 //
 mongoose
-  .connect("mongodb+srv://nkdasar:nkdasar@cluster0.hiqmtqx.mongodb.net/")
+  .connect("mongodb+srv://sages:sages@sages.p1zye6m.mongodb.net/shopify-db")
   .then(() => {
     console.log("Connected to MongoDb");
   })
