@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test
+    environment:
+      ENV: production
+    ports:
+     - "5000:5000"
+    volumes:
+     - ./logs:/app/logs   # Mount local logs directory for persistent Winston logs
+    logging:
+      driver: journald

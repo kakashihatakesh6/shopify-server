@@ -3,9 +3,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const logger = require("./logger");
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
@@ -19,18 +20,24 @@ require('dotenv').config();
 mongoose
   .connect("mongodb+srv://sages:sages@sages.p1zye6m.mongodb.net/shopify-db")
   .then(() => {
-    console.log("Connected to MongoDb");
-  })
+    // console.log("Connected to MongoDb");
+    logger.info("Connected to MongoDb"); // Updated log	  
+ })
   .catch((err) => {
-    console.log("Error connecting to mongoDb", err);
+   //  console.log("Error connecting to mongoDb", err);
+    logger.error("Error connecting to MongoDb", err); // Updated error log
   });
   
-app.get('/', (req, res) => {
-  res.json({message: "Server is working fine!"});
-});
 
 app.listen(port, () => {
-  console.log("Server is running on port 8000");
+ // console.log("Server is running on port http://localhost:"+port);
+    logger.info("Server is running on port http://localhost:"+port);
+});
+
+// Base Route
+app.get('/', async (req, res) => {
+   logger.info("Route Hit '/'")
+    res.json({status: true, message: "Server is running fine!"});
 });
 
 // const User = require("../models/User");
@@ -65,6 +72,11 @@ const sendVerificationEmail = async (email, verificationToken) => {
     console.log("Error sending verification email", error);
   }
 };
+// Health Check
+app.get("/api", async (req, res) => {
+  logger.info("Route hit '/api'"); 
+  res.json({status: true, message: "server is okay on /api/"});
+});
 
 // Endpoint to register User
 app.post("/register", async (req, res) => {
