@@ -4,12 +4,15 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const logger = require("./logger");
+const routeLogger = require("./routeLogger");
 
 const app = express();
 const port = process.env.PORT || 5000;
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
+// Middleware to log all route hits
+app.use(routeLogger);
 //
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,7 +39,6 @@ app.listen(port, () => {
 
 // Base Route
 app.get('/', async (req, res) => {
-   logger.info("Route Hit '/'")
     res.json({status: true, message: "Server is running fine!"});
 });
 
@@ -74,8 +76,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
 };
 // Health Check
 app.get("/api", async (req, res) => {
-  logger.info("Route hit '/api'"); 
-  res.json({status: true, message: "server is okay on /api/"});
+    res.json({status: true, message: "server is okay on /api/"});
 });
 
 // Endpoint to register User

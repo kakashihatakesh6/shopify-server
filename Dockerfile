@@ -1,23 +1,22 @@
-#parent image
-FROM node:18
+# Use a lightweight Node.js base image
+FROM node:18-alpine
 
-#Working directory
+# Set working directory
 WORKDIR /app
 
-#install curl
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Install curl (via apk, Alpine's package manager)
+RUN apk add --no-cache curl
 
-#Copy Package files intall dependency
+# Copy dependency files first and install packages
 COPY package*.json ./
-
-#Install Dependencies
 RUN npm install
 
-#Copy the rest of the app's source code
+# Copy the rest of the application code
 COPY . .
 
-#Expose the Port that the app runs on
+# Expose the port the app runs on
 EXPOSE 5000
 
-# Define the command to run the app
+# Start the application
 CMD ["node", "index.js"]
+
