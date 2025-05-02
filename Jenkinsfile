@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    DOCKER_IMAGE = "yourdockerhubusername/node-app:${env.BUILD_NUMBER}"
+    DOCKER_IMAGE = "nikhildasar/nodejs-shopfify:${env.BUILD_NUMBER}"
   }
 
   stages {
