@@ -2,13 +2,13 @@ pipeline {
   agent any
 
   environment {
-    DOCKER_IMAGE = "nikhildasar/nodejs-shopfify:${env.BUILD_NUMBER}"
+    DOCKER_IMAGE = "nikhildasar/nodejs-shopfify:3"
   }
 
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/kakashihatakesh6/shopify-server'
+        git branch: 'new-dev', url: 'https://github.com/kakashihatakesh6/shopify-server.git'
       }
     }
 
